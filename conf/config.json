@@ -6,12 +6,15 @@
       "N" : "data/results/NMDP/2024-05-17/results.csv",
       "A" : "data/results/ANT/2024-01-09/results.csv",
       "Z" : "data/results/ZKRD/2024-02-12/results.csv",
-      "D" : "data/results//DKMS/2023-10-25/results.csv",
-      "C" : "data/results/CNMDR/2023-11-02/results.csv"
+      "D" : "data/results//DKMS/2024-05-29/results.csv",
+      "C" : "data/results/CNMDR/2024-06-20/results.csv"
    },
    "keep_zero_prob" : 0,
    "joinfile" : "output/all.txt",
    "statsfile" : "output/stats.txt",
-   "homeworkdir" : "output/homework",
-   "homeworknum" : 10
+   "homeworkdir" : "output/homework3",
+   "homeworknum" : 10,
+   "skipcord" : 1,
+   "patientfile" : "data/MV4/patients.csv",
+   "donorfile" : "data/MV4/donors.csv"
 }
