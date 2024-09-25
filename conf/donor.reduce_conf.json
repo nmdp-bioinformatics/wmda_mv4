@@ -1,0 +1,62 @@
+{
+  "in_csv_filename": "data/donors.f.csv",
+  "out_csv_filename": "data/donors.redux.csv",
+  "columns_from_csv": [
+    "DONOR_ID",
+    "A1",
+    "A2",
+    "B1",
+    "B2",
+    "C1",
+    "C2",
+    "DRB11",
+    "DRB12",
+    "DQB11",
+    "DQB12",
+    "DONOR_TYPE", 
+    "HF_SET"
+  ],
+  "locus_column_mapping": {
+    "donor": {
+      "a": [
+        "A1",
+        "A2"
+      ],
+      "b": [
+        "B1",
+        "B2"
+      ],
+      "c": [
+        "C1",
+        "C2"
+      ],
+      "dqb1": [
+        "DQB11",
+        "DQB12"
+      ],
+      "drb1": [
+        "DRB11",
+        "DRB12"
+      ]
+    }
+  },
+  "redux_type": "lgx",
+  "redux_cache_size": 1000,
+  "reduce_serology": true,
+  "reduce_v2": false,
+  "convert_v2_to_v3": false,
+  "reduce_2field": true,
+  "reduce_3field": true,
+  "reduce_P": true,
+  "reduce_XX": true,
+  "reduce_MAC": true,
+  "map_drb345_to_drbx": false,
+  "locus_in_allele_name": true,
+  "keep_locus_in_allele_name": true,
+  "new_column_for_redux": true,
+  "reduced_column_prefix": "reduced_",
+  "generate_glstring": true,
+  "output_file_format": "csv",
+  "apply_compression": "gzip",
+  "verbose_log": true
+}

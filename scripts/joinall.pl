@@ -40,8 +40,10 @@ foreach my $p (sort keys %D) {
     # uncomment this to only read 100 donors
     #next if $d gt "D000099";
     my @keys=();
+    my %mmval;
     my @mmval=();
     my @p10val=();
+    my %p10val;
     foreach my $key (sort keys %{$r}) {
       if (defined $D{$p}{$d}{$key}) {
         my $mm = $D{$p}{$d}{$key}[13-1-2];
@@ -61,12 +63,25 @@ foreach my $p (sort keys %D) {
         }
 
         push @keys, $key;
-        push @mmval, $mm;
-        push @p10val, $p10;
+        $mmval{$key} = $mm;
+        $p10val{$key} = $p10;
       }
     }
     next unless @keys;
     #PATIENT_ID,DONOR_ID,A1,A2,B1,B2,C1,C2,DRB11,DRB12,DQB11,DQB12,Count_MM,P8_10,P9_10,P10_10,HF_SET_PATIENT,EXPLAINED_PATIENT,HF_SET_DONOR,EXPLAINED_DONOR
+
+    foreach my $key (sort keys %{$r}) {
+      if (defined $p10val{$key}) {
+        push @p10val, $p10val{$key}; 
+      } else {
+        push @p10val, "";
+      }
+      if (defined $mmval{$key}) {
+        push @mmval, $mmval{$key}; 
+      } else {
+        push @mmval, "";
+      }
+    }   
     print JOINFILE join (',', $p, $d, join('', @keys), @mmval, @p10val), "\n";
   }
 }

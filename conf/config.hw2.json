@@ -1,0 +1,17 @@
+# config-file-type: JSON 1
+
+{
+   "mv4_datadir" : "data/MV4",
+   "results" : {
+      "N" : "data/results/NMDP/2024-05-17/results.csv",
+      "A" : "data/results/ANT/2024-01-09/results.csv",
+      "Z" : "data/results/ZKRD/2024-02-12/results.csv",
+      "D" : "data/results//DKMS/2023-10-25/results.csv",
+      "C" : "data/results/CNMDR/2023-11-02/results.csv"
+   },
+   "keep_zero_prob" : 0,
+   "joinfile" : "output/all.txt",
+   "statsfile" : "output/stats.txt",
+   "homeworkdir" : "output/homework",
+   "homeworknum" : 10
+}
