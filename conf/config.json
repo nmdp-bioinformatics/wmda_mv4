@@ -4,14 +4,15 @@
    "mv4_datadir" : "data/MV4",
    "results" : {
       "N" : "data/results/NMDP/2024-05-17/results.csv",
-      "A" : "data/results/ANT/2024-01-09/results.csv",
-      "Z" : "data/results/ZKRD/2024-02-12/results.csv",
-      "D" : "data/results//DKMS/2024-05-29/results.csv",
+      "A" : "data/results/ANT/2024-09-25/results.csv",
+      "Z" : "data/results/ZKRD/2024-09-13/results.csv",
+      "D" : "data/results//DKMS/2024-08-07/results.csv",
       "C" : "data/results/CNMDR/2024-06-20/results.csv"
    },
    "keep_zero_prob" : 0,
    "joinfile" : "output/all.txt",
    "statsfile" : "output/stats.txt",
+   "errfile" :   "output/error.txt",
    "homeworkdir" : "output/homework3",
    "homeworknum" : 10,
    "skipcord" : 1,

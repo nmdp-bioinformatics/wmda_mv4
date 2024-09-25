@@ -44,10 +44,18 @@ If this is set to `0` then any cases where P(8/10) + P(9/10) + P(10/10) <=0 will
 8. run scripts/stats.pl
 9. output will be in `output/stats.txt'
 
+# select homework
+`scripts/hwsample.pl`
+
 # categorize
 1. preformat `scripts/preformat_d.pl  >data/donors.f.csv`
 2. preformat `scripts/preformat_p.pl  >data/patients.f.csv`
 3. `pyard-reduce-csv -c conf/donor.reduce_conf.json -i 3.52.0 `
 4. `pyard-reduce-csv -c conf/patient.reduce_conf.json -i 3.52.0 `
+5. `scripts/mkfilter.pl`
+    Creates data/clean_donor.csv and data/clean_patient.csv
 
-5. scripts/mkfilter.pl >data/patients.filter.csv
+
+# query
+Extract only the cases that meet criteria for patient or donor
+scripts/allclean.pl

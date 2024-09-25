@@ -14,7 +14,7 @@ use warnings;  # or else
 
 my $v = 1; # verbose
 
-my @fields = qw/clean highres sero lowres mac highres_null mac_null indepedent_null xx_null homo_a homo_b homo_c homo_drb1 homo_dqb1/;
+my @fields = qw/clean highres sero lowres mac highres_null mac_null independent_null xx_null homo_a homo_b homo_c homo_drb1 homo_dqb1 miss_drb1 miss_c miss_dqb1/;
 
 
 my %D;
@@ -45,6 +45,7 @@ open FILE, $file or die "$!: $file";
 while(<FILE>) {
   chomp;
   my ($id, $sero, $lowres, $missing, $mac, $null, $hires) = split /,/;
+  next unless defined $id;
   next if $id eq "ID";
   $D{$id}{sero} = $sero eq "Y" ? 1 : 0;
   $D{$id}{lowres} = $lowres eq "Y" ? 1 : 0;
@@ -78,6 +79,33 @@ while(<FILE>) {
 }
   
 
+# miss
+print STDERR "missing...\n" if $v;
+$file = "data/missing/mv4_missing_loci_donors_detail.csv";
+open FILE, $file or die "$!: $file";
+
+while(<FILE>) {
+  chomp;
+  s/"//g;
+  my ($id, $flag) = split /,/;
+  $D{$id}{miss_drb1}++ if $flag eq "DRB1";
+  $D{$id}{miss_c}++ if $flag eq "C";
+  $D{$id}{miss_dqb1}++ if $flag eq "DQB1";
+}
+$file = "data/missing/mv4_missing_loci_detail.csv";
+open FILE, $file or die "$!: $file";
+
+while(<FILE>) {
+  chomp;
+  s/"//g;
+  my ($id, $flag) = split /,/;
+  $P{$id}{miss_drb1}++ if $flag eq "DRB1";
+  $P{$id}{miss_c}++ if $flag eq "C";
+  $P{$id}{miss_dqb1}++ if $flag eq "DQB1";
+}
+
+
+
 
 # hom
 print STDERR "homozygosity...\n" if $v;
@@ -89,11 +117,11 @@ while(<FILE>) {
   s/"//g;
   my ($id, $flag) = split /,/;
   $D{$id}{homo}++ if $flag eq "N";
-  $D{$id}{homo_A}++ if $flag eq "A";
-  $D{$id}{homo_B}++ if $flag eq "B";
-  $D{$id}{homo_C}++ if $flag eq "C";
-  $D{$id}{homo_DRB1}++ if $flag eq "DRB1";
-  $D{$id}{homo_DQB1}++ if $flag eq "DQB1";
+  $D{$id}{homo_a}++ if $flag eq "A";
+  $D{$id}{homo_b}++ if $flag eq "B";
+  $D{$id}{homo_c}++ if $flag eq "C";
+  $D{$id}{homo_drb1}++ if $flag eq "DRB1";
+  $D{$id}{homo_dqb1}++ if $flag eq "DQB1";
 }
 
 $file = "data/homo/mv4_potential_homo_patients.csv";
@@ -104,11 +132,11 @@ while(<FILE>) {
   s/"//g;
   my ($id, $flag) = split /,/;;
   $P{$id}{homo}++ if $flag eq "N";
-  $P{$id}{homo_A}++ if $flag eq "A";
-  $P{$id}{homo_B}++ if $flag eq "B";
-  $P{$id}{homo_C}++ if $flag eq "C";
-  $P{$id}{homo_DRB1}++ if $flag eq "DRB1";
-  $P{$id}{homo_DQB1}++ if $flag eq "DQB1";
+  $P{$id}{homo_a}++ if $flag eq "A";
+  $P{$id}{homo_b}++ if $flag eq "B";
+  $P{$id}{homo_c}++ if $flag eq "C";
+  $P{$id}{homo_drb1}++ if $flag eq "DRB1";
+  $P{$id}{homo_dqb1}++ if $flag eq "DQB1";
 }
 
 
@@ -154,12 +182,13 @@ open CP, ">$clean_patient" or die "$!: $clean_patient";
 
 print CD join (',', "donor_id", @fields), "\n";
 print CP join (',', "patient_id", @fields, "\n");
-foreach my $id (keys %P) {
+foreach my $id (sort keys %P) {
+  next if $id =~ /PATIENT_ID/;
   my @out = ();
   $P{$id}{clean}= 
-      defined $P{$id}{classification} &&  
+      (defined $P{$id}{classification} &&  
       defined $P{$id}{homo} &&  
-      defined $P{$id}{null} ? 1 : 0;
+      defined $P{$id}{null}) ? 1 : 0;
   foreach my $field (@fields) {
     push @out, defined $P{$id}{$field} ?  $P{$id}{$field} : 0;
   }
@@ -167,12 +196,13 @@ foreach my $id (keys %P) {
 }
 
 
-foreach my $id (keys %D) {
+foreach my $id (sort keys %D) {
+  next if $id =~ /DONOR_ID/;
   my @out = ();
   $D{$id}{clean}= 
-      defined $D{$id}{classification} &&  
+      (defined $D{$id}{classification} &&  
       defined $D{$id}{homo} &&  
-      defined $D{$id}{null} ? 1 : 0;
+      defined $D{$id}{null}) ? 1 : 0;
   foreach my $field (@fields) {
     push @out, defined $D{$id}{$field} ?  $D{$id}{$field} : 0;
   }
